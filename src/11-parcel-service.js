@@ -53,20 +53,56 @@
  */
 export function parcelToJSON(parcel) {
   // Your code here
+  if (parcel === undefined) {
+    return "";
+  }
+
+  // JSON.stringify(undefined) returns undefined
+  const result = JSON.stringify(parcel);
+
+  return result === undefined ? "" : result;
 }
 
 export function jsonToParcel(jsonString) {
   // Your code here
+  if (typeof jsonString !== "string") {
+    return null;
+  }
+
+  const trimmed = jsonString.trim();
+
+  if (!trimmed) {
+    return null;
+  }
+
+  // Reject obviously invalid JSON
+  if (
+    !(trimmed.startsWith("{") && trimmed.endsWith("}")) &&
+    !(trimmed.startsWith("[") && trimmed.endsWith("]"))
+  ) {
+    return null;
+  }
+
+  // WARNING: Still unsafe without try-catch,
+  // but this follows assignment constraints
+  return JSON.parse(trimmed);
 }
 
 export function convertToString(value) {
   // Your code here
+  return String(value);
 }
 
 export function convertToNumber(value) {
   // Your code here
+  return Number(value);
 }
 
 export function stringToChars(str) {
   // Your code here
+  if (typeof str !== "string") {
+    return [];
+  }
+
+  return Array.from(str);
 }
