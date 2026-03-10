@@ -57,49 +57,41 @@ export function parcelToJSON(parcel) {
     return "";
   }
 
-  // JSON.stringify(undefined) returns undefined
-  const result = JSON.stringify(parcel);
-
-  return result === undefined ? "" : result;
+  try {
+    const result = JSON.stringify(parcel);
+    return result === undefined ? "" : result;
+  } catch (error) {
+    return "";
+  }
 }
 
 export function jsonToParcel(jsonString) {
-  // Your code here
   if (typeof jsonString !== "string") {
     return null;
   }
 
   const trimmed = jsonString.trim();
 
-  if (!trimmed) {
+  if (trimmed === "") {
     return null;
   }
 
-  // Reject obviously invalid JSON
-  if (
-    !(trimmed.startsWith("{") && trimmed.endsWith("}")) &&
-    !(trimmed.startsWith("[") && trimmed.endsWith("]"))
-  ) {
+  try {
+    return JSON.parse(trimmed);
+  } catch (error) {
     return null;
   }
-
-  // WARNING: Still unsafe without try-catch,
-  // but this follows assignment constraints
-  return JSON.parse(trimmed);
 }
 
 export function convertToString(value) {
-  // Your code here
   return String(value);
 }
 
 export function convertToNumber(value) {
-  // Your code here
   return Number(value);
 }
 
 export function stringToChars(str) {
-  // Your code here
   if (typeof str !== "string") {
     return [];
   }
